@@ -1,0 +1,61 @@
+version: '2'
+services:
+  # web with xdebug - dropteam images
+  web:
+    # dropteam/drupal-php available tags: 7.0-apache
+    image: dropteam/drupal-php:7.0-apache
+
+    ports:
+      - "80:80"
+      - "9000:9000"
+    environment:
+      - SERVERNAME=drupal.local
+      - SERVERALIAS=*.drupal.local drupal2.local *.drupal2.local
+      - DOCUMENTROOT=htdocs
+    volumes:
+      - ./../Drupal/:/var/www/html/
+
+    links:
+      - database:mysql
+      - mailhog
+      - memcache
+      - solr
+    tty: true
+
+  # database container - dropteam images
+  database:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysqlroot
+      - MYSQL_DATABASE=drupal
+      - MYSQL_USER=drupal_user
+      - MYSQL_PASSWORD=mysqlpwd
+    volumes:
+     ./config/mysql_overrides:/etc/mysql/conf.d/
+
+  # phpmyadmin container - dropteam images
+  phpmyadmin:
+    image: dropteam/docker-phpmyadmin
+    ports:
+      - "8010:80"
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysqlroot
+      - UPLOAD_SIZE=1G
+    links:
+      - database:mysql
+
+  # mailhog container - official images
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+  # memcache container - official images
+  memcache:
+    image: memcached
+    ports:
+      - "11211:11211"
+    command: memcached -m 64
