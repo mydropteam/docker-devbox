@@ -19,7 +19,27 @@ services:
       - database:mysql
       - mailhog
       - memcache
-      - solr
+    tty: true
+
+  # web with xhprof - dropteam images
+  xhprof:
+    # dropteam/drupal-php available tags: 7.0-apache
+    image: dropteam/drupal-php:7.0-apache-xhprof
+
+    ports:
+      - "8050:80"
+    environment:
+      - SERVERNAME=drupal-xhprof.local
+      - SERVERALIAS=*.drupal-xhprof.local drupal2-xhprof.local *.drupal2-xhprof.local
+      - DOCUMENTROOT=htdocs
+    volumes:
+      - ./../Drupal/:/var/www/html/
+
+    links:
+      - database:mysql
+      - mailhog
+      - memcache
+      - mongo
     tty: true
 
   # database container - dropteam images
@@ -33,7 +53,7 @@ services:
       - MYSQL_USER=drupal_user
       - MYSQL_PASSWORD=mysqlpwd
     volumes:
-     ./config/mysql_overrides:/etc/mysql/conf.d/
+      - ./config/mysql:/etc/mysql/conf.d/
 
   # phpmyadmin container - dropteam images
   phpmyadmin:
@@ -59,3 +79,15 @@ services:
     ports:
       - "11211:11211"
     command: memcached -m 64
+
+  # mongodb container - dropteam images
+  mongo:
+    image: mongo:latest
+
+  # xhgui container - dropteam images
+  xhgui:
+    image: dropteam/xhgui
+    ports:
+      - "8040:80"
+    links:
+      - mongo
