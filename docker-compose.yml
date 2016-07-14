@@ -1,4 +1,5 @@
 version: '2'
+
 services:
   # web with xdebug - dropteam images
   web:
@@ -6,20 +7,24 @@ services:
     image: dropteam/drupal-php:7.0-apache
 
     ports:
-      - "80:80"
-      - "9000:9000"
+      - "${PORT_WEB}:80"
+      - "${PORT_WEBXDEBUG}:9000"
     environment:
-      - SERVERNAME=drupal.local
-      - SERVERALIAS=*.drupal.local drupal2.local *.drupal2.local
-      - DOCUMENTROOT=htdocs
+      - SERVERNAME=${XDEBUG_SERVERNAME}
+      - SERVERALIAS=${XDEBUG_SERVERALIAS}
+      - DOCUMENTROOT=${DOCUMENTROOT}
     volumes:
-      - ./../Drupal/:/var/www/html/
-
+      - ${LOCALPATH}:/var/www/html/
+    depends_on:
+      - database
+      - mailhog
+      - memcache
     links:
       - database:mysql
       - mailhog
       - memcache
     tty: true
+    env_file: .env
 
   # web with xhprof - dropteam images
   xhprof:
@@ -27,14 +32,18 @@ services:
     image: dropteam/drupal-php:7.0-apache-xhprof
 
     ports:
-      - "8050:80"
+      - "${PORT_WEBXHPROF}:80"
     environment:
-      - SERVERNAME=drupal-xhprof.local
-      - SERVERALIAS=*.drupal-xhprof.local drupal2-xhprof.local *.drupal2-xhprof.local
-      - DOCUMENTROOT=htdocs
+      - SERVERNAME=${XHPROF_SERVERNAME}
+      - SERVERALIAS=${XHPROF_SERVERALIAS}
+      - DOCUMENTROOT=${DOCUMENTROOT}
     volumes:
-      - ./../Drupal/:/var/www/html/
-
+      - ${LOCALPATH}:/var/www/html/
+    depends_on:
+      - database
+      - mailhog
+      - memcache
+      - mongo
     links:
       - database:mysql
       - mailhog
@@ -48,21 +57,23 @@ services:
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=mysqlroot
-      - MYSQL_DATABASE=drupal
-      - MYSQL_USER=drupal_user
-      - MYSQL_PASSWORD=mysqlpwd
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
-      - ./config/mysql:/etc/mysql/conf.d/
+      - ${MYSQL_CONFIG}:/etc/mysql/conf.d/
 
   # phpmyadmin container - dropteam images
   phpmyadmin:
     image: dropteam/docker-phpmyadmin
     ports:
-      - "8010:80"
+      - "${PORT_PHPMYADMIN}:80"
     environment:
-      - MYSQL_ROOT_PASSWORD=mysqlroot
-      - UPLOAD_SIZE=1G
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - UPLOAD_SIZE=${UPLOAD_SIZE}
+    depends_on:
+      - database
     links:
       - database:mysql
 
@@ -70,15 +81,15 @@ services:
   mailhog:
     image: mailhog/mailhog
     ports:
-      - "1025:1025"
-      - "8025:8025"
+      - "${PORT_MAILHOG2}:1025"
+      - "${PORT_MAILHOG1}:8025"
 
   # memcache container - official images
   memcache:
     image: memcached
     ports:
-      - "11211:11211"
-    command: memcached -m 64
+      - "${PORT_MEMCACHE}:11211"
+    command: memcached -m ${MEMCACHE_MEM}
 
   # mongodb container - dropteam images
   mongo:
@@ -88,6 +99,8 @@ services:
   xhgui:
     image: dropteam/xhgui
     ports:
-      - "8040:80"
+      - "${PORT_XHGUI}:80"
+    depends_on:
+      - mongo
     links:
       - mongo
