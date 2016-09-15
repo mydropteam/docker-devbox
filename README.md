@@ -40,7 +40,7 @@ Drupal devbox is a configuration starter for a Docker environment to provide by 
    ```bash
    docker-compose stop
    ```
-4. Enter in your container
+4. Enter in your container  
    A container is run on a debian stack. You can access by SSH with the next command:  
 
    ```bash
