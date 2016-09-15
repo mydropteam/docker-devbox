@@ -50,7 +50,7 @@ Drupal devbox is a configuration starter for a Docker environment to provide by 
 ## Go further  
 ### Use more middleware
 Docker provide a hub with public images : https://hub.docker.com  
-In example, if you want to add a SolR image, you will only have to edit your `docker-compose.yml' file and add your container instruction :
+For example, if you want to add a SolR image, you will only have to edit your `docker-compose.yml' file and add your container instructions :
 ```yml
 solr:
     image: solr:5.5.3
