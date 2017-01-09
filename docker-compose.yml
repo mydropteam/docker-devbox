@@ -4,7 +4,7 @@ services:
   # web with xdebug - dropteam images
   web:
     # dropteam/drupal-php available tags: 7.0-apache
-    image: dropteam/drupal-php:7.0-apache
+    image: dropteam/drupal-php:5.6-apache
 
     ports:
       - "${PORT_WEB}:80"
@@ -19,17 +19,19 @@ services:
       - database
       - mailhog
       - memcache
+      - solr
     links:
       - database:mysql
       - mailhog
       - memcache
+      - solr
     tty: true
     env_file: .env
 
   # web with xhprof - dropteam images
   xhprof:
     # dropteam/drupal-php available tags: 7.0-apache
-    image: dropteam/drupal-php:7.0-apache-xhprof
+    image: dropteam/drupal-php:5.6-apache-xhprof
 
     ports:
       - "${PORT_WEBXHPROF}:80"
@@ -44,11 +46,13 @@ services:
       - mailhog
       - memcache
       - mongo
+      - solr
     links:
       - database:mysql
       - mailhog
       - memcache
       - mongo
+      - solr
     tty: true
 
   # database container - dropteam images
@@ -63,6 +67,14 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - ${MYSQL_CONFIG}:/etc/mysql/conf.d/
+
+  # solr container - official images
+  solr:
+    image: solr:6.3
+    ports:
+      - "${PORT_SOLR}:8983"
+    volumes:
+      - ${SOLR_CONFIG}:/opt/solr/server/solr/collection1/
 
   # phpmyadmin container - dropteam images
   phpmyadmin:
