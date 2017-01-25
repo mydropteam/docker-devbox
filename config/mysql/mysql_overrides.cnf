@@ -7,6 +7,10 @@ transaction-isolation = READ-COMMITTED
 max_allowed_packet = 128M
 
 # Logs
-log-error               = /var/log/mysql/mysql_error.log
+#log-error               = /var/log/mysql/mysql_error.log
+#slow-query-log          = 1
+#slow-query-log_file     = /var/log/mysql/slow-query.log
+
 slow-query-log          = 1
-slow-query-log_file     = /var/log/mysql/slow-query.log
+general-log-file        = /dev/stdout
+slow-query-log_file     = /dev/stderr
