@@ -22,11 +22,11 @@ Drupal devbox is a configuration starter for a Docker environment to provide by 
    You have to edit some variables to configure your project as `COMPOSE_PROJECT_NAME` variable which will define your docker containers names.
 
 2. Define your environment  
-   Drupal-devbox is a full stack LAMP with development middleware. You can disabled each container as you want. 
+   Drupal-devbox is a full stack LAMP with development middleware. You can disabled each container as you want.
    On your `docker-compose.yml` file, you can comment a container with a `#` at line start.  
    Don't forget to check all the container dependencies  
 
-3. Start your environment 
+3. Start your environment
 
    To start your environment, you have to use this command  
    ```bash
@@ -34,8 +34,8 @@ Drupal devbox is a configuration starter for a Docker environment to provide by 
    ```
    The `-d` arguments will hide containers logs
    You should see all your container starting.  
-   
-   
+
+
    You can stop your containers by  
    ```bash
    docker-compose stop
@@ -47,13 +47,36 @@ Drupal devbox is a configuration starter for a Docker environment to provide by 
    docker exec -ti [CONTAINER-NAME] /bin/bash
    ```
 
+## HTTP accelerator  
+### Varnish 4
+
+We use million12's Varnish image.
+You can customize the .vcl file in the config folder. Please see the .env file to define Varnish variables.
+You should set ${PORT_VARNISH} to 80 and ${PORT_WEB} to something else.
+
+```yml
+varnish:
+  image: million12/varnish
+  ports:
+    - "${PORT_VARNISH}:80"
+  volumes:
+    - ${VARNISH_CONFIG}:/etc/varnish
+  links:
+    - web
+  environment:
+    - CACHE_SIZE=${VARNISH_MEM}
+```
+
 ## Go further  
 ### Use more middleware
 Docker provide a hub with public images : https://hub.docker.com  
-For example, if you want to add a SolR image, you will only have to edit your 'docker-compose.yml' file and add your container instructions :
+For example, if you want to add a SolR image, with custom configuration files, you will only have to edit your 'docker-compose.yml' file and add your container instructions :
+
 ```yml
 solr:
-    image: solr:5.5.3
+    image: solr:6.3
     ports:
-      - "${PORT_SOLR}:2181"
+      - "${PORT_SOLR}:8983"
+    volumes:
+      - ${SOLR_CONFIG}:/opt/solr/server/solr/collection1/
 ```

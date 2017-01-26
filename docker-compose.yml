@@ -1,6 +1,18 @@
 version: '2'
 
 services:
+  # varnish - million12 image
+  varnish:
+    image: million12/varnish
+    ports:
+      - "${PORT_VARNISH}:80"
+    volumes:
+      - ${VARNISH_CONFIG}:/etc/varnish
+    links:
+      - web
+    environment:
+      - CACHE_SIZE=${VARNISH_MEM}
+
   # web with xdebug - dropteam images
   web:
     # dropteam/drupal-php available tags: 7.0-apache
@@ -26,30 +38,30 @@ services:
     tty: true
     env_file: .env
 
-  # web with xhprof - dropteam images
-  xhprof:
-    # dropteam/drupal-php available tags: 7.0-apache
-    image: dropteam/drupal-php:7.0-apache-xhprof
-
-    ports:
-      - "${PORT_WEBXHPROF}:80"
-    environment:
-      - SERVERNAME=${XHPROF_SERVERNAME}
-      - SERVERALIAS=${XHPROF_SERVERALIAS}
-      - DOCUMENTROOT=${DOCUMENTROOT}
-    volumes:
-      - ${LOCALPATH}:/var/www/html/
-    depends_on:
-      - database
-      - mailhog
-      - memcache
-      - mongo
-    links:
-      - database:mysql
-      - mailhog
-      - memcache
-      - mongo
-    tty: true
+  # # web with xhprof - dropteam images
+  # xhprof:
+  #   # dropteam/drupal-php available tags: 7.0-apache
+  #   image: dropteam/drupal-php:7.0-apache-xhprof
+  #
+  #   ports:
+  #     - "${PORT_WEBXHPROF}:80"
+  #   environment:
+  #     - SERVERNAME=${XHPROF_SERVERNAME}
+  #     - SERVERALIAS=${XHPROF_SERVERALIAS}
+  #     - DOCUMENTROOT=${DOCUMENTROOT}
+  #   volumes:
+  #     - ${LOCALPATH}:/var/www/html/
+  #   depends_on:
+  #     - database
+  #     - mailhog
+  #     - memcache
+  #     - mongo
+  #   links:
+  #     - database:mysql
+  #     - mailhog
+  #     - memcache
+  #     - mongo
+  #   tty: true
 
   # database container - dropteam images
   database:
@@ -91,16 +103,16 @@ services:
       - "${PORT_MEMCACHE}:11211"
     command: memcached -m ${MEMCACHE_MEM}
 
-  # mongodb container - dropteam images
-  mongo:
-    image: mongo:latest
-
-  # xhgui container - dropteam images
-  xhgui:
-    image: dropteam/xhgui
-    ports:
-      - "${PORT_XHGUI}:80"
-    depends_on:
-      - mongo
-    links:
-      - mongo
+  # # mongodb container - dropteam images
+  # mongo:
+  #   image: mongo:latest
+  #
+  # # xhgui container - dropteam images
+  # xhgui:
+  #   image: dropteam/xhgui
+  #   ports:
+  #     - "${PORT_XHGUI}:80"
+  #   depends_on:
+  #     - mongo
+  #   links:
+  #     - mongo
