@@ -3,12 +3,15 @@ version: '2'
 services:
   # web with xdebug - dropteam images
   web:
-    # dropteam/drupal-php available tags: 7.0-apache
+    # dropteam/drupal-php available tags: 7.0-apache, 5.6-apache
     image: dropteam/drupal-php:7.0-apache
 
     ports:
       - "${PORT_WEB}:80"
       - "${PORT_WEBXDEBUG}:9000"
+          # Settings xdebug
+    extra_hosts:
+     - "docker_host:10.200.10.1"
     environment:
       - SERVERNAME=${XDEBUG_SERVERNAME}
       - SERVERALIAS=${XDEBUG_SERVERALIAS}
@@ -28,7 +31,7 @@ services:
 
   # web with xhprof - dropteam images
   xhprof:
-    # dropteam/drupal-php available tags: 7.0-apache
+    # dropteam/drupal-php available tags: 7.0-apache, 5.6-apache
     image: dropteam/drupal-php:7.0-apache-xhprof
 
     ports:
