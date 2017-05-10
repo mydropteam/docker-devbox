@@ -46,6 +46,21 @@ Drupal devbox is a configuration starter for a Docker environment to provide by 
    ```bash
    docker exec -ti [CONTAINER-NAME] /bin/bash
    ```
+   
+## Mac User
+To avoid bad I/O Performances, you have to use https://github.com/IFSight/d4m-nfs.
+1. Dowload the project and move it to your Home
+2. Remove all your shared folder except /tmp
+3. ShutDown Docker app
+4. Install d4m-nfs
+   ```bash
+   d4m-nfs/install.sh
+   ```
+
+Every time you want to use your dev environment, you have to start Docker with : 
+   ```bash
+   d4m-nfs/d4m-nfs.sh
+   ```
 
 ## Go further  
 ### Use more middleware
