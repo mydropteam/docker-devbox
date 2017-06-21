@@ -4,3 +4,5 @@
 # Ignore IDE project files
 .idea
 .idea/*
+
+.env
