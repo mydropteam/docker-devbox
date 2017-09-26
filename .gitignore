@@ -1,6 +1,8 @@
 # Ignore temporary files.
 *~
-
+# Ignore local settings files.
+.env
+/config/xdebug/xdebug.ini
 # Ignore IDE project files
 .idea
 .idea/*

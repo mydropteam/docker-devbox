@@ -10,14 +10,13 @@ services:
       - "${PORT_WEB}:80"
       - "${PORT_WEBXDEBUG}:9000"
           # Settings xdebug
-    extra_hosts:
-     - "docker_host:10.200.10.1"
     environment:
       - SERVERNAME=${XDEBUG_SERVERNAME}
       - SERVERALIAS=${XDEBUG_SERVERALIAS}
       - DOCUMENTROOT=${DOCUMENTROOT}
     volumes:
       - ${LOCALPATH}:/var/www/html/
+      - ${XDEBUG_CONFIG}:/usr/local/etc/php/conf.d/xdebug.ini
     depends_on:
       - database
       - mailhog
