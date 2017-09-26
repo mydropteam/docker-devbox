@@ -1,6 +1,7 @@
 # Ignore temporary files.
 *~
-
+# Ignore local settings files.
+.env
 # Ignore IDE project files
 .idea
 .idea/*
