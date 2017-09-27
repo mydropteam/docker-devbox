@@ -4,7 +4,7 @@ services:
   # web with xdebug - dropteam images
   web:
     # dropteam/drupal-php available tags: 7.0-apache, 5.6-apache
-    image: dropteam/drupal-php:7.0-apache
+    image: dropteam/drupal-php:7.1-apache
 
     ports:
       - "${PORT_WEB}:80"
@@ -31,7 +31,7 @@ services:
   # web with xhprof - dropteam images
   xhprof:
     # dropteam/drupal-php available tags: 7.0-apache, 5.6-apache
-    image: dropteam/drupal-php:7.0-apache-xhprof
+    image: dropteam/drupal-php:7.1-apache-xhprof
 
     ports:
       - "${PORT_WEBXHPROF}:80"
