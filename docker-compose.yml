@@ -106,3 +106,10 @@ services:
       - mongo
     links:
       - mongo
+volumes:
+  ${XDEBUG_CONFIG}:
+    external: true
+  ${LOCALPATH}:
+    external: true
+  ${MYSQL_CONFIG}:
+    external: true

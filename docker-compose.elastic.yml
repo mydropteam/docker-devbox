@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+
+  # Elasticsearch
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.1
+
+    ports:
+      - "${PORT_ELASTIC}:9200"
+      - "9300:9300"
+
+    environment:
+      - transport.host=127.0.0.1
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+
+    ulimits:
+      memlock:
+        soft:     -1
+        hard:     -1
+
+    mem_limit:    1g
+
+    volumes:
+      - ${ELASTIC_CONFIG}:/usr/share/elasticsearch/config/elasticsearch.yml
+#      - local:/usr/share/elasticsearch/data
+
+  # Kibana
+  kibana:
+    image: docker.elastic.co/kibana/kibana:5.5.1
+
+    depends_on:
+      - elastic
+    links:
+      - elastic
+    volumes:
+      - ${KIBANA_CONFIG}:/usr/share/kibana/config
+    ports:
+      - ${PORT_KIBANA}:5601
