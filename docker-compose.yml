@@ -15,8 +15,8 @@ services:
       - SERVERALIAS=${XDEBUG_SERVERALIAS}
       - DOCUMENTROOT=${DOCUMENTROOT}
     volumes:
-      - ${LOCALPATH}:/var/www/html/
-      - ${XDEBUG_CONFIG}:/usr/local/etc/php/conf.d/xdebug.ini
+      - ${LOCALPATH}:/var/www/html/:delegated
+      - ${XDEBUG_CONFIG}:/usr/local/etc/php/conf.d/xdebug.ini:delegated
     depends_on:
       - database
       - mailhog
@@ -27,31 +27,6 @@ services:
       - memcache
     tty: true
     env_file: .env
-
-  # web with xhprof - dropteam images
-  xhprof:
-    # dropteam/drupal-php available tags: 7.0-apache, 5.6-apache
-    image: dropteam/drupal-php:7.1-apache-xhprof
-
-    ports:
-      - "${PORT_WEBXHPROF}:80"
-    environment:
-      - SERVERNAME=${XHPROF_SERVERNAME}
-      - SERVERALIAS=${XHPROF_SERVERALIAS}
-      - DOCUMENTROOT=${DOCUMENTROOT}
-    volumes:
-      - ${LOCALPATH}:/var/www/html/
-    depends_on:
-      - database
-      - mailhog
-      - memcache
-      - mongo
-    links:
-      - database:mysql
-      - mailhog
-      - memcache
-      - mongo
-    tty: true
 
   # database container - dropteam images
   database:
@@ -64,7 +39,7 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
-      - ${MYSQL_CONFIG}:/etc/mysql/conf.d/
+      - ${MYSQL_CONFIG}:/etc/mysql/conf.d/:delegated
 
   # phpmyadmin container - dropteam images
   phpmyadmin:

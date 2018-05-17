@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  # fractal
+  fractal:
+    # dropteam/fractal-image:1.1.7
+    image: dropteam/fractal-image:1.1.7
+    ports:
+      - "${PORT_FRACTAL}:3000"
+      - "${PORT_FRACTAL_SYNC}:3002"
+
+    volumes:
+      - ${FRACTAL_THEME_PATH}:/opt/project:delegated
+
+    command: ["fractal", "start", "--sync"]
+    tty: true
+    env_file: .env

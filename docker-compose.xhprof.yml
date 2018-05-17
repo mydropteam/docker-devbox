@@ -13,7 +13,7 @@ services:
       - SERVERALIAS=${XHPROF_SERVERALIAS}
       - DOCUMENTROOT=${DOCUMENTROOT}
     volumes:
-      - ${LOCALPATH}:/var/www/html/
+      - ${LOCALPATH}:/var/www/html/:delegated
     depends_on:
       - database
       - mailhog

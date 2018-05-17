@@ -23,7 +23,7 @@ services:
     mem_limit:    1g
 
     volumes:
-      - ${ELASTIC_CONFIG}:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ${ELASTIC_CONFIG}:/usr/share/elasticsearch/config/elasticsearch.yml:delegated
 #      - local:/usr/share/elasticsearch/data
 
   # Kibana
@@ -35,6 +35,6 @@ services:
     links:
       - elastic
     volumes:
-      - ${KIBANA_CONFIG}:/usr/share/kibana/config
+      - ${KIBANA_CONFIG}:/usr/share/kibana/config:delegated
     ports:
       - ${PORT_KIBANA}:5601
