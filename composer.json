@@ -1,7 +1,7 @@
 {
     "name": "mydropteam/docker-devbox",
     "description": "Docker Box for developpers",
-    "type": "dev-devbox",
+    "type": "project",
     "authors": [
         {
             "name": "Juergen Pecher",
@@ -20,7 +20,7 @@
     },
     "extra": {
         "installer-paths": {
-            "docker-devbox": ["vendor:mydropteam/docker-devbox"]
+            "docker-devbox": ["mydropteam/docker-devbox"]
         }
     }
 }
