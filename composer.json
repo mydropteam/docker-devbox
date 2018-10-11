@@ -19,15 +19,16 @@
         "wikimedia/composer-merge-plugin": "^1.4"
     },
     "extra": {
-
         "installer-types": ["devbox"],
         "installer-paths": {
             "docker-devbox": ["mydropteam/docker-devbox"]
         },
         "merge-plugin": {
             "include": [
-                "composer.json"
+                "*composer.json"
             ],
+            "recurse": true,
+            "replace": true,
             "merge-extra": true
         }
     }
