@@ -20,11 +20,11 @@
     },
     "extra": {
 
+        "installer-types": ["devbox"],
+        "installer-paths": {
+            "docker-devbox": ["mydropteam/docker-devbox"]
+        },
         "merge-plugin": {
-            "installer-types": ["devbox"],
-            "installer-paths": {
-                "docker-devbox": ["mydropteam/docker-devbox"]
-            },
             "include": [
                 "composer.json"
             ],
