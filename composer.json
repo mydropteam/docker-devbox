@@ -13,5 +13,13 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "composer/installers": "^1.2",
+        "cweagans/composer-patches": "^1.6.5"
+    },
+    "extra": {
+        "installer-paths": {
+            "{$name}": ["mydropteam/docker-devbox"]
+        }
+    }
 }
