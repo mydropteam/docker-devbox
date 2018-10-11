@@ -19,7 +19,7 @@
     },
     "extra": {
         "installer-paths": {
-            "docker-devbox": ["type:dev-devbox"]
+            "docker-devbox": ["mydropteam/docker-devbox"]
         }
     }
 }
