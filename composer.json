@@ -1,7 +1,7 @@
 {
     "name": "mydropteam/docker-devbox",
     "description": "Docker Box for developpers",
-    "type": "project",
+    "type": "library",
     "authors": [
         {
             "name": "Juergen Pecher",
