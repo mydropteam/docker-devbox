@@ -15,12 +15,12 @@
     "minimum-stability": "dev",
     "require": {
         "composer/installers": "^1.2",
-        "oomphinc/composer-installers-extender": "^1.1"
+        "oomphinc/composer-installers-extender": "^1.1",
+        "wikimedia/composer-merge-plugin": "^1.4"
     },
     "extra": {
-        "installer-types": ["devbox"],
-        "installer-paths": {
-            "dummy/path": ["mydropteam/docker-devbox"]
+        "merge-plugin": {
+            "merge-extra": true
         }
     }
 }
