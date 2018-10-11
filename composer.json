@@ -15,7 +15,8 @@
     "minimum-stability": "dev",
     "require": {
         "composer/installers": "^1.2",
-        "cweagans/composer-patches": "^1.6.5"
+        "cweagans/composer-patches": "^1.6.5",
+        "oomphinc/composer-installers-extender": "^1.1"
     },
     "extra": {
         "installer-paths": {
