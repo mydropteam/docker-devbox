@@ -19,7 +19,7 @@
     },
     "extra": {
         "installer-paths": {
-            "{$name}": ["type:dev-devbox"]
+            "test/{$name}": ["type:dev-devbox"]
         }
     }
 }
