@@ -1,7 +1,7 @@
 {
     "name": "mydropteam/docker-devbox",
     "description": "Docker Box for developpers",
-    "type": "library",
+    "type": "devbox",
     "authors": [
         {
             "name": "Juergen Pecher",
@@ -15,13 +15,12 @@
     "minimum-stability": "dev",
     "require": {
         "composer/installers": "^1.2",
-        "cweagans/composer-patches": "^1.6.5",
-        "oomphinc/composer-installers-extender": "^1.1",
-        "wikimedia/composer-merge-plugin": "^1.4"
+        "oomphinc/composer-installers-extender": "^1.1"
     },
     "extra": {
+        "installer-types": ["devbox"],
         "installer-paths": {
-            "docker-devbox": ["mydropteam/docker-devbox"]
+            "dummy/path": ["mydropteam/docker-devbox"]
         }
     }
 }
