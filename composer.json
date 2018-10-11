@@ -26,7 +26,7 @@
                 "docker-devbox": ["mydropteam/docker-devbox"]
             },
             "include": [
-                "composer.*.json"
+                "composer.json"
             ],
             "merge-extra": true
         }
