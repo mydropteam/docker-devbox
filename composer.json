@@ -20,7 +20,7 @@
     },
     "extra": {
         "installer-paths": {
-            "docker-devbox": ["mydropteam/docker-devbox"]
+            "docker-devbox": ["vendor:mydropteam/docker-devbox"]
         }
     }
 }
