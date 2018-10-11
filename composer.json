@@ -1,0 +1,17 @@
+{
+    "name": "mydropteam/docker-devbox",
+    "description": "Docker Box for developpers",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Juergen Pecher",
+            "email": "juergen.pecher@mydropteam.com"
+        },
+        {
+            "name": "Damien Loté",
+            "email": "damien.lote@mydropteam.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
